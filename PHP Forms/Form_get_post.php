@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
    
-    <title>Hello, world!</title>
+    <title>Form_get_post</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -52,10 +52,23 @@
 
 <?php
 
+
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+  session_start();
   $email = $_POST['email'];
   $password = $_POST['password'];
+  if($email == $password)
+  {
+    $_SESSION['Email']=$email;
+    header("Location:./welcome.php");
+    echo "Email or password is same";
+  }
+  else{
+    $_SESSION['falure'] = "username and password essent match!!...";
+    header("Location:./error.php");
+    echo "Email or password is different";
+  }
 
   echo '<div class="alert alert-success d-flex align-items-center" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>

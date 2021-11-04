@@ -11,7 +11,7 @@
     <title>login form!</title>
   </head>
   <body>
-       <h1   class="text-center mt-3 mb-3">login form</h1>
+       <h1 class="text-center mt-3 mb-3">login form</h1>
 
   <div class="container card shadow mb-5 mt-4 me-5"">
   <form class="card-body" action="./Form_get_post.php" method="post">
