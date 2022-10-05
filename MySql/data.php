@@ -3,11 +3,11 @@ $ipadress=$_POST['ipadress'];
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "ip_address";
+$dbname = "MYDB1_ip";
 echo $ipadress;
 //Create a connection object
 $conn = mysqli_connect($servername, $username, $password, $dbname);
-
+$tempIP = $ipadress;
 //terminate if connection is not valid
 if(!$conn)
 {
@@ -26,36 +26,49 @@ if($result) {
   } else {
     echo "Error: " . $query . "<br>" . $conn->error;
   }
-  
+
   $query2 = "SELECT * FROM ip_count";
   $result2 = mysqli_query($conn,$query2);
- $arr=[];
-  foreach($result2 as $value)
-  {
-    $arr['ipaddress'][]=$value['ip_address'];
-  }
-  var_dump($arr);
-  $iCnt = 0;
+  // $arr=[];
   $i=0;
-  for($i = 0; $i < count($arr);$i++)
-  {
-    if($arr[$i]==$ipadress)
+  while($arr = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    print("ID: ".$arr["ip_address"]."\n");
+    if(count($arr)<=5)
     {
-        $iCnt++;
+      $i++;
+    }
+    echo "<bt>".$i. "<br>";
+    echo $tempIP."<-temp>";
+    if(($arr[$i]==$tempIP)&&(count($arr)<=5))
+    {
+      echo"array count is:". count($arr)."/br";
+      echo "enjoy our free services";
+    }
+    else{
+      echo "please fill the above form";
     }
   }
-
-  
-// While a row of data exists, put that row in $row as an associative array
-// Note: If you're expecting just one row, no need to use a loop
-// Note: If you put extract($row); inside the following loop, you'll
-//       then create $userid, $fullname, and $userstatus
-// while ($row = mysql_fetch_assoc($result1)) {
-//     echo $row["ip_address"];
-// }
-
-// $result1;
-  
-
-
+  // echo "<br>".count($arr);
+  // foreach($result2 as $value)
+  // {
+  //   echo $result;
+  //   $arr['ipaddress'][]=$value['ip_address'];
+  // }
+  // var_dump($arr);
+  // $iCnt = 0;
+  // for($iCnt = 0; $iCnt < count($arr);$iCnt++)
+  // {
+    //  echo "array length is".count($arr)."\n";
+    //  echo $iCnt;
+          // echo $arr[$i]."<br />";
+//     if(($arr[$i]==$tempIP))
+//     {
+//         $iCnt++;
+//         echo "count is : ".$iCnt;
+//     }
+//     if($iCnt <= 5)
+//     {
+//           break;
+//     }
+  // }
 ?>
