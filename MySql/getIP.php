@@ -5,8 +5,6 @@
 3. create database connection 
 3. store ip address  in our table 
 4. then get all ip address which is store in our database in one array using mysqli num row
-
-
 $iCnt = 0;
 for($i = 0; $i < DBARR.len; $i++)
 {
@@ -21,8 +19,6 @@ if(iCnt<=5)
 }else{
     return false
 }
-
-
 5. 
 */
 
@@ -34,11 +30,8 @@ if(iCnt<=5)
 $servername = "localhost";
 $username = "root";
 $password = "";
-
-
 //Create a connection object
 $conn = mysqli_connect($servername,$username,$password);
-
 //terminate if connection is not valid
 if(!$conn)
 {
@@ -47,7 +40,6 @@ if(!$conn)
 else{
 echo"connection is successful<br>";
 }
-
 $query = ("INSERT INTO IPADDRESS $ )
 */?>
 
@@ -101,7 +93,7 @@ $query = ("INSERT INTO IPADDRESS $ )
     $.ajax({
         url:'data.php',
         type:'POST',
-        data:{'ipadress':data}
+        data:{'ipaddress':data}
     })
 });
 }
@@ -113,7 +105,6 @@ $query = ("INSERT INTO IPADDRESS $ )
 //     $ip = POST['ip'];
 //     echo "ip address is".$ip;
 // }
-
 function getCount()
 {
     
@@ -132,15 +123,12 @@ if(iCnt<=5)
     return false;
 }
 }
-
 // $ret = getCount();
 // echo $ret;
 // $currentIP = $SERVER['REMOTE_ADDR'];
-$currentIP = $_SERVER['REMOTE_ADDR'];
+// $currentIP = $_SERVER['REMOTE_ADDR'];
 // getenv("REMOTE_ADDR");
-
 ?> -->
 
 </script>
 </html>
-
