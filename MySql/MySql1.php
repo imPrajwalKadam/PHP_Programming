@@ -1,39 +1,29 @@
-<?php
+  <?php
+  $ipaddress=$_POST['ipaddress'];
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "mydb1_ip";
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  
 
-echo "We are ready to connect database <br>";
-
-//conecting the data base
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-
-
-//Create a connection object
-$conn = mysqli_connect($servername,$username,$password);
-
-//terminate if connection is not valid
-if(!$conn)
-{
-     die("connection failed ". mysqli_connect_error());
-}
-else{
-echo"connection is successful<br>";
-}
-
-//create database .
-$sql = "CREATE DATABASE PrajwalDB1";
-$result = mysqli_query($conn,$sql);
-//check database is created successfully or not
-if($result == true)
-{
-     echo "the database wase created successfully! ";
-}
-else{
-     echo "Data base not created successfully because of this error ".mysqli_error($conn);
-     //echo "<br>";
-}
-echo "The result is : ";
-echo var_dump($result);
-echo "<br>";
-?>
+  //script for storing new ip and update duplicate ip's count
+        $query4 = "INSERT INTO ip_count(ip_address) VALUES ('".$ipaddress."') ON DUPLICATE KEY UPDATE ip_Count = ip_Count + 1";
+        $result2 = mysqli_query($conn,$query4);
+      
+    //script of compairing total count of ip if ip_count==5 script displays form else continue..
+    $query2 = "SELECT * FROM ip_count";
+    $result2 = mysqli_query($conn,$query2);
+    $arr=[];
+    $i = 0;
+    $rows = [];
+    while($row = mysqli_fetch_array($result2))
+    {
+    if($row['ip_Count']==5)
+    {
+      print "please fill the form";
+    }
+    else{
+      print"continue with our services ..";
+    }
+    }
