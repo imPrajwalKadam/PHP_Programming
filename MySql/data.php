@@ -18,10 +18,10 @@
  $rows = [];
  while($row = mysqli_fetch_array($result2))
  {
- if($row['ip_Count'] == 4 )
+ if((($row['ip_Count'] >= 0)&&($row['is_reg'])==1))
  {
   echo'success';die();
-}
+ }
 // else if($row['mobile'] == null && ()){
 // }
  else{
