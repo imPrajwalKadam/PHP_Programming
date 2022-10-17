@@ -19,7 +19,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form role="form" id="newModalForm" onsubmit="return ValidationEvent()">
+        <form id="newModalForm" method="POST" action="">
           <div class="form-group">
             <label class="control-label col-md-3" for="email">First Name:</label>
             <div class="col-md-9">
@@ -48,7 +48,8 @@
 					<input type="text" id="userOtp" name="userOtp" placeholder="OTP"/></div>
 				</div>	
           <div class="modal-footer">
-            <input type="submit" value="Submit"class="btn btn-success" id="btnSaveIt">
+            <button type="button" id="sendData" onclick="validationEvent()">submit</button>
+            <!-- <input type="submit" value="Submit"class="btn btn-success" id="btnSaveIt"> -->
           </div>
           <div>
           <input type="text" name="rndmpassword" id="rndmpassword" />
@@ -57,154 +58,103 @@
 					<input type="text" id="userOtp" name="userOtp" placeholder="OTP"/></div>
 				</div>	
         </form>
-      <!-- <form name="regform" id="regform" action="" method="post" onload="readyfunction(); " style="padding-left: 20%;">
-			<input type="hidden" name="testJavaScript" id="testJavaScript" value="0"/>
-			<input type="hidden" name="refUserId" id="refUserId" value=<?echo $refId;?>>
-			<div class="styled-select">
-				<div style="float:left"><input type="text" id="firstname" size="10" name="firstname"  class="required" placeholder="First name"  value=""/></div>
-				<div><input type="text" id="lastname" size="10" name="lastname" class="required" placeholder="Last name" /></div>
-				<div class="clear"></div>
-				<div class="on-focus clearfix" style="position: relative;">
-				<input type="email" id="useremail" name="useremail" class="required email" placeholder="E-mail"  style="width:410px;max-width:80%; padding:10px;" value="<?php if(isset($emailid)){echo $emailid;} ?>"/>
-				 <div class="tool-tip slideIn left">Activation link will be sent here</div>
-				</div> 
-				<span id="status" style="float: left;"></span>
-				
-				<div class="clear"></div>
-				<div style="float:left"><input type="password" id="password" name="password" class="required password" minlength="6" maxlength="15" placeholder="Password"/></div>
-				<div>
-					<input type="text" id="phone" name="phone" class="required number" maxlength="12" minlength="10" placeholder="Phone"  value="<?php if(isset($phone)){echo $phone;} ?>"/>
-				</div>
-				<div class="clear"></div>
-				<div style="float: left;"><div class="on-focus clearfix" id="otpDiv" style="position: relative; display: none;">
-					<input type="text" id="userOtp" name="userOtp" placeholder="OTP"/></div>
-				</div>	
-				<div style="color:#CC0000;font-size:12px;padding-left:10px;padding-top:5px">* All fields are required</div>
-				<div class="clear"></div>
-				<div id='sendOtpDiv' style="display: block; width: 100%"><input class="submit button" style="background: #BE482C;width:90px ; margin-left:30%;" type="button" onClick="sendOtp()" value="Send OTP"/><br/>
-				</div>
-				<div class="clear"></div>
-				<div id='display' style="margin-right: 250px;">
-				</div>
-				<div class="clear"></div>
-				<div id='verifyOtpDiv' style="display: none; width: 100%; float: left;"><input class="submit button" style="background: #BE482C;width:90px ; margin-left:30%;" type="button" onClick="check()" value="Verify OTP"/><br/><div id='loader' style='display:none'>Verfying and Saving Information...<br/><img src="images/ajax-loader.gif"> </div>
-				</div>
-				<input type="hidden" name="dob" id="dob" />
-				<input type="hidden" name="rndmpassword" id="rndmpassword" />
-			</div>
-		</form> -->
       </div>
     </div>
   </div>
 </div>
 </body>
+</html>
+
 <script type="text/javascript">
-         $(document).ready(function(){
-        $("#exampleModal").modal('show');
-    });
+      var data;
     function dataIp(){
         // alert("hello");
     $.getJSON("http://ip-api.com/json",function(ip){
-        var data =ip.query;
+        data =ip.query;
     $.ajax({
         url:'data.php',
         type:'POST',
         data:{'ipaddress':data},
-        success:function(data){
-        if(data === "success"){         
-            $(document).ready(function(){
-        $("#myModal").modal('show');  
-    });
+        success:function(data)
+        {
+          if(data === "success")
+          {         
+            $(document).ready(function(){$("#myModal").modal('show');});
+          }
         }
-        }
-    })
-});
+    })//end ajax call
+});//end ip call
 }
 
-$(function() {
-$("#newModalForm").validate({
-  rules: {
-    pName: {
-      required: true,
-      minlength: 2
-    },
-    mobile:{
-      required:true,
-      minlength: 10,
-      maxlength: 10
-    },
-    email:{
-      required:true,
-    }
-  },
-  messages: {
-    pName: {
-      required: "Please enter your name",
-      minlength: "Your data must be at least 2 characters"
-    },
-    mobile:{
-      required:"enter mobile number",
-      minlength:"enter valid mobile number"
-    },
-    // email:{
-    //   required:"enter your email",
-    // }
-  }
-});
-});
 
 
-</script>
-
-<script>
-  
 // Below Function Executes On Form Submit
-function ValidationEvent() {
+function validationEvent() {
 // Storing Field Values In Variables
 var name = document.getElementById("pName").value;
 var lastname = document.getElementById('lastname').value;
 var email = document.getElementById("email").value;
 var contact = document.getElementById("mobile").value;
-sendOtp();
-alert(name);
-alert(lastname);
-alert(email);
-alert(contact);
 
+
+if(name=="")
+{
+  alert("enter firstname");
+}else if(name.preg_match("/^[a-z ,.'-]+$/i"))
+{
+  alert("enter valid name")
+}
+if(lastname ==""){
+  alert("enter lastname"); 
+}else if(email==""){
+alert("enter email");
+}else if(contact==""){
+  alert("enter contact details");
+}else{
+ $.ajax({
+        type:'POST',
+        url:'saveData.php',
+        data:{
+        'firstname':name,
+        'lastname':lastname,
+        'email':email,
+        'contact':contact,
+        'ipaddress':data,
+      },
+        success:function(data){}
+    });
+    sendOtp();
+
+  }
 }
 
 
-
 function sendOtp(){
-  alert("sendotp function");
 	randomString();
 
-	
 	var otp=document.getElementById('rndmpassword').value;
-  alert(otp);
 	// var fname=document.regform.firstname.value;
 	// var lname=document.regform.lastname.value;
-	var contact=document.getElementById('mobile').value;
-alert(contact);
-	// var xmlhttp=new XMLHttpRequest();
-	// xmlhttp.onreadystatechange=function(){
-	// 	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-	// 		var error=xmlhttp.responseText;
-	// 		var res = error.split("|");
-      
-	// 		if(res[0] == "SUBMIT_SUCCESS "){
-	// 			// document.getElementById('otpDiv').style.display = "block";
-	// 			// document.getElementById('sendOtpDiv').style.display = "none";
-	// 			// document.getElementById('verifyOtpDiv').style.display = "block";
-	// 			// countdown(300, $('#display'));
-	// 		}
-	// 		else{
-	// 			document.getElementById('hdnerror').innerHTML=xmlhttp.responseText;
-	// 		}
-	//     }
-	// }
-	// xmlhttp.open("POST","registration1.php",true);
-	// xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	var contact=document.getElementById('phone').value;
+
+	var xmlhttp=new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+			var error=xmlhttp.responseText;
+			var res = error.split("|");
+			if(res[0] == "SUBMIT_SUCCESS "){
+				document.getElementById('otpDiv').style.display = "block";
+				document.getElementById('sendOtpDiv').style.display = "none";
+				document.getElementById('verifyOtpDiv').style.display = "block";
+				countdown(300, $('#display'));
+			}
+			else{
+				document.getElementById('hdnerror').innerHTML=xmlhttp.responseText;
+			}
+	    }
+	}
+	xmlhttp.open("POST","registration1.php",true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("otp="+otp+"&phone="+contact);
 }
 function randomString() 
@@ -218,8 +168,5 @@ function randomString()
 	}
 document.getElementById('rndmpassword').value = randomstring;
 }
+</script>
 
-</script>
-</html>
-</script>
-</html>
