@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </html>
-<button style = "text allign:center"type="button"onclick="dataIp()" class="btn btn-primary">data</button>
+<button type="button"onclick="dataIp()" class="btn btn-primary">data</button>
 <body>
 <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog">
@@ -48,11 +48,10 @@
 					<input type="text" id="userOtp" name="userOtp" placeholder="OTP"/></div>
 				</div>	
           <div class="modal-footer">
-            <button type="button" id="sendData" onclick="validationEvent()">submit</button>
-            <!-- <input type="submit" value="Submit"class="btn btn-success" id="btnSaveIt"> -->
+            <button type="button" id="sendData"class="btn btn-success" onclick="validationEvent()">submit</button>
           </div>
           <div>
-          <input type="text" name="rndmpassword" id="rndmpassword" />
+          <input type="text"placeholder="enter otp" name="rndmpassword" id="rndmpassword" />
           </div>
           <div style="float: left;"><div id="otpDiv" style="position: relative; display: none;">
 					<input type="text" id="userOtp" name="userOtp" placeholder="OTP"/></div>
@@ -100,11 +99,8 @@ var contact = document.getElementById("mobile").value;
 if(name=="")
 {
   alert("enter firstname");
-}else if(name.preg_match("/^[a-z ,.'-]+$/i"))
-{
-  alert("enter valid name")
 }
-if(lastname ==""){
+else if(lastname ==""){
   alert("enter lastname"); 
 }else if(email==""){
 alert("enter email");
@@ -121,9 +117,11 @@ alert("enter email");
         'contact':contact,
         'ipaddress':data,
       },
-        success:function(data){}
+        success:function(data){
+          alert("data is successfully submited");
+        }
     });
-    sendOtp();
+    // sendOtp();
 
   }
 }
@@ -136,7 +134,6 @@ function sendOtp(){
 	// var fname=document.regform.firstname.value;
 	// var lname=document.regform.lastname.value;
 	var contact=document.getElementById('phone').value;
-
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200){
@@ -157,12 +154,16 @@ function sendOtp(){
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("otp="+otp+"&phone="+contact);
 }
+
+
+
+
 function randomString() 
 { 
 	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
 	var string_length = 6;
 	var randomstring = '';
-	for (var i=0; i<string_length; i++) {
+	for (var i=0; i < string_length; i++) {
 		var rnum = Math.floor(Math.random() * chars.length);
 		randomstring += chars.substring(rnum,rnum+1);
 	}
